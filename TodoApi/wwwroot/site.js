@@ -36,11 +36,11 @@ function getData() {
                             $("<input/>", {
                                 type: "checkbox",
                                 disabled: true,
-                                checked: item.isComplete
+                                checked: item.ativo
                             })
                         )
                     )
-                    .append($("<td></td>").text(item.name))
+                    .append($("<td></td>").text(item.nome))
                     .append(
                         $("<td></td>").append(
                             $("<button>Edit</button>").on("click", function () {
@@ -66,8 +66,8 @@ function getData() {
 
 function addItem() {
     const item = {
-        name: $("#add-name").val(),
-        isComplete: false
+        nome: $("#add-name").val(),
+        ativo: false
     };
 
     $.ajax({
@@ -99,9 +99,9 @@ function deleteItem(id) {
 function editItem(id) {
     $.each(todos, function (key, item) {
         if (item.id === id) {
-            $("#edit-name").val(item.name);
+            $("#edit-name").val(item.nome);
             $("#edit-id").val(item.id);
-            $("#edit-isComplete")[0].checked = item.isComplete;
+            $("#edit-isComplete")[0].checked = item.ativo;
         }
     });
     $("#spoiler").css({ display: "block" });
@@ -109,8 +109,8 @@ function editItem(id) {
 
 $(".my-form").on("submit", function () {
     const item = {
-        name: $("#edit-name").val(),
-        isComplete: $("#edit-isComplete").is(":checked"),
+        nome: $("#edit-name").val(),
+        ativo: $("#edit-isComplete").is(":checked"),
         id: $("#edit-id").val()
     };
 

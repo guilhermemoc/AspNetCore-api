@@ -21,7 +21,7 @@ namespace TodoApi.Controllers
             {
                 // Create a new TodoItem if collection is empty,
                 // which means you can't delete all TodoItems.
-                _context.TodoItems.Add(new TodoItem { Name = "Item1" });
+                _context.TodoItems.Add(new TodoItem { Nome = "Item1" });
                 _context.SaveChanges();
             }
 
@@ -54,11 +54,16 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem item)
         {
-            _context.TodoItems.Add(item);
-            await _context.SaveChangesAsync();
+            if (!string.IsNullOrEmpty(item.Nome)) {
+                _context.TodoItems.Add(item);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTodoItem), new { id = item.Id }, item);
-
+                return CreatedAtAction(nameof(GetTodoItem), new { id = item.Id }, item);
+            }
+            else
+            {
+                return NotFound("teste");
+            }
         }
 
 
